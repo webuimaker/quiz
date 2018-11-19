@@ -1,0 +1,100 @@
+<article class="www-components flex-auto col-12">
+	<section class="www-component-desc" id="samples_templates">
+		<h2 class="www-heading pb4 mb2 relative">Trivia Contest </h2>
+		<!--<div class="mb4">
+			<p>Templates and metadata samples for different kinds of AMPs.</p>
+		</div>
+		-->
+		{{ $urlPre := getJSON  "https://opentdb.com/api.php?amount=10" }}
+		{{ $.Scratch.Add "qa" 0 }}
+		{{ $opt := "init" }}
+		
+		
+		
+		
+  
+  
+   {{ $.Scratch.Set "counter" 0 }}
+		
+	
+		{{ range  $index, $page :=  $urlPre.results   }}
+		
+		
+		{{ $c :=add $index 1 }}
+		{{ $.Scratch.Set "counter" (add ($.Scratch.Get "counter") 1) }}
+		
+		{{ $ch := .type }}
+		<div class="abe-examples flex flex-wrap">
+			<div class="ampstart-card abe-sample-card flex flex-column flex-auto p1 mb1 mw100">
+				<h3 class="mb1">{{ .question | markdownify }} </h3>
+				
+				{{ $opt := .correct_answer }} 
+				
+				{{ $.Scratch.Add "option" .incorrect_answers }}
+				
+				{{ $opt := .incorrect_answers }} 
+				{{range .incorrect_answers }}
+					{{ $.Scratch.Add "qa" 1 }}
+				{{ $k := $.Scratch.Get "qa" }}
+					{{ if eq $ch "multiple" }}
+						<div class="ampstart-input ampstart-input-chk inline-block relative mb1 mr1">
+							<input type="checkbox" id="{{ . }}" name="{{ . }}" class="relative" value="Cats">
+							<label for="{{ . }}">{{ . }}</label>
+						</div>
+					{{ else }}
+						<div class="ampstart-input ampstart-input-radio inline-block relative m0 p0 mb3 ">
+							<input type="radio" id="{{ . }}" class="relative" name="favourite animal" value="{{ . }}">
+							<label for="{{ . }}">{{ . }}</label>
+						</div>
+					{{ end }}
+			
+				
+			{{ end }}
+			<div class="abe-sample-card-actions right">
+				<!--<input type="submit" value="DONE" class="ampstart-btn caps right"> -->
+				<a class="ampstart-btn caps text-decoration-none inline-block right " href="#">DONE</a> 
+			</div>
+			
+			
+			</div>
+		</div>
+		{{ end }}
+		
+		
+		  
+		  <ul>
+  
+ 
+</ul>
+		
+	</section>
+</article>
+
+<article class="www-components flex-auto col-12">
+	<section class="www-component-desc" id="samples_templates">
+		
+		<div class="abe-examples flex flex-wrap">
+			<div class="ampstart-car  flex flex-column flex-auto p1 mb1 mw100">
+				
+                    <div class="abe-sample-card-actions">
+						
+						{{ if .PrevInSection }}
+							<a href="{{.PrevInSection.Permalink}}">Previous Post</a>
+						{{ end }}
+						{{ if .NextInSection }}
+							<a href="{{.NextInSection.Permalink}}">Next Post</a>
+						{{ end }}
+					
+					
+						  <a class="ampstart-btn caps text-decoration-none inline-block " href="//localhost:1313/post/my-new-post/">PRE</a>
+                        <a class="ampstart-btn caps text-decoration-none inline-block right" href="//localhost:1313/post/my-new-post/">NEXT</a>
+					</div>
+            </div>
+		</div>
+		
+		
+	</section>
+</article>
+
+			
+
