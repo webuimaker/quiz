@@ -1,0 +1,27 @@
+{
+	"quiz": [
+		{
+			"q": "Features1",
+			"choice": "multi",
+			"option": [
+				"Dropdown item",
+				"Dropdown item",
+				"Dropdown item",
+				"Dropdown item"
+			]
+		},
+		{
+			"q": "Features2",
+			"choice": "tf",
+			"option": [
+				"Dropdown item",
+				"Dropdown item",
+				"Dropdown item",
+				"Dropdown item"
+			]
+		}
+	]
+}
+
+
+

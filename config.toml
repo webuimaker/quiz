@@ -1,0 +1,24 @@
+languageCode = "en-us"
+theme="amp"
+baseurl = "/"
+title = "Trivia Contest"
+copyright = "© 2018 Trivia Contest"
+canonifyurls = true
+
+[params]
+  description = "Your Site description for top page" #optional
+  googleanalytics = "Your Tracking Id" # optional
+
+# optional
+[social]
+  twitter = "Your Twitter Name"
+  github = "webuimaker"
+  facebook = "Your facebook Name"
+  gplus = "Your Google+ profile name"
+  linkedin = "Your LinkedIn Name"
+  
+	
+[[menu.main]]
+    name = "Registration/Login"
+    url = "/appurl/"
+    weight = 1
