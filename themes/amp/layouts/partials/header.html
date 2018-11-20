@@ -12,12 +12,15 @@
     <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
     <script async custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js"></script>
     <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
+	<script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
     <!-- <script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script> -->
     <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
     <title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{.}} - {{ end }}{{ .Site.Title }}{{ end }}</title>
     <link href="https://fonts.googleapis.com/css?family=Inconsolata|Montserrat" rel="stylesheet">
     <style amp-custom>{{ partial "css.css" . | safeCSS }}</style>
 	<style amp-custom>{{ partial "cust-css.css" . | safeCSS }}</style>
+	
+		
 </head>
 
 <body>
@@ -47,9 +50,16 @@
               {{else}}
                 <li class="ampstart-nav-item{{if $currentPage.IsMenuCurrent "main" . }} www-current-page{{end}}"><a href="{{.URL}}" class="text-decoration-none block">{{ .Name }}</a></li>
               {{end}}
+			  <li><span amp-access="NOT loggedIn" role="button" tabindex="0" amp-access-hide>
+				  <h5>Please login to comment</h5>
+				  <button on="tap:amp-access.login-sign-in" class="button-primary comment-button">Login</button>
+				</span>
+			</li>
 			  
             {{end}}
             </ul>
+			
+			
         </nav>
     </header>
     <!-- Start Sidebar -->
@@ -80,6 +90,7 @@
             {{end}}
           {{end}}
         </nav>
+		
     </amp-sidebar>
     <!-- End Sidebar -->
     <!-- End Navbar -->

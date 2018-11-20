@@ -20,5 +20,5 @@ canonifyurls = true
 	
 [[menu.main]]
     name = "Registration/Login"
-    url = "/appurl/"
+    url = "/login/"
     weight = 1
