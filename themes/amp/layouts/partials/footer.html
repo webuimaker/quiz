@@ -110,6 +110,9 @@
 	
 	var questions = myQuestions.results;
 	var isFirstCall = true;
+	var ques_history = {};
+	var staus;
+	var selected_index;
 	//console.log(  questionsOpt );
 	
 	/*
@@ -225,21 +228,26 @@ $(document).ready(function ()
 			else{			
 				//$('.submitNow').prop("disabled", false);
 				//alert(val);
+				var status=""
 				if(val == corAns){
 					$(".curstatus").removeClass("error");
 					$(".curstatus").addClass("success");
 					$(".curstatus").text("correct");
+					status = "correct";
 				}
 				else{
 					$(".curstatus").removeClass("success");
 					$(".curstatus").addClass("error");
 					$(".curstatus").text("incorrect");
-					
+					status = "incorrect";	
 				}
 					
 				
 			}
-		}
+		} 
+		
+		ques_history[currentQuestion] = {"is_submit":"true","selected_index":$("input[type='radio']:checked").val(),"staus":status};
+		$(".radio-inline").attr('disabled', true);
 	
 	});
 
@@ -411,6 +419,29 @@ function displayCurrentQuestion()
 		}
     }
 	$('<li><input type="radio" class="radio-inline" value=' + i + ' name="dynradio" />' +  ' ' + questions[currentQuestion].correct_answer  + '</li>').appendTo(choiceList);
+	
+	if(ques_history[currentQuestion]){
+		if(ques_history[currentQuestion].is_submit)
+		{
+			$(".radio-inline").attr('disabled', true);
+			$(".submitNow").attr('disabled', true);
+			
+			// set checked radio button   ques_history[currentQuestion].sellected_index
+			// set status
+			console.log(staus);
+			if( staus == 'correct'){
+				$(".curstatus").removeClass("error");
+				$(".curstatus").addClass("success");
+				$(".curstatus").text("correct");
+			}
+			if(staus == 'incorrect'){
+				$(".curstatus").removeClass("success");
+					$(".curstatus").addClass("error");
+					$(".curstatus").text("incorrect");
+			}
+			
+		}
+	}
 }
 
 function resetQuiz()
