@@ -9,71 +9,28 @@
 		{{ $.Scratch.Add "qa" 0 }}
 		{{ $opt := "init" }}
 		{{ $length := (len $urlPre.results) -}}
+		{{ $.Scratch.Set "counter" 0 }}
 		
-		
-  
-   {{ $.Scratch.Set "counter" 0 }}
-		
-	
-		{{ range first 1  $urlPre.results  }}
-		
-		
+		{{ range $index, $value := $urlPre.results  }}
 		{{ $ch := .type }}
-		<div class="abe-examples flex flex-wrap">
-			<div class="ampstart-card abe-sample-card flex flex-column flex-auto p1 mb1 mw100">
-				<h3 class="mb1">{{ .question | markdownify }}</h3>
-				
-				{{ $opt := .correct_answer }} 
-				
-				{{ $.Scratch.Add "option" .incorrect_answers }}
-				
-				{{ $opt := .incorrect_answers }} 
-				{{range .incorrect_answers }}
-					{{ $.Scratch.Add "qa" 1 }}
-					{{ $k := $.Scratch.Get "qa" }}
-					{{ if eq $ch "multiple" }}
-						<div class="ampstart-input ampstart-input-chk inline-block relative mb1 mr1">
-							<input type="checkbox" id="{{ . }}" name="{{ . }}" class="relative" value="Cats">
-							<label for="{{ . }}">{{ . }}</label>
-						</div>
-					{{ else }}
-						<div class="ampstart-input ampstart-input-radio inline-block relative m0 p0 mb3 ">
-							<input type="radio" id="{{ . }}" class="relative" name="favourite animal" value="{{ . }}">
-							<label for="{{ . }}">{{ . }}</label>
-						</div>
-					{{ end }}
 			
-				
-				{{ end }}
-				
-				{{ if eq $ch "multiple" }}
-						<div class="ampstart-input ampstart-input-chk inline-block relative mb1 mr1">
-							<input type="checkbox" id="{{ .correct_answer }}" name="{{ .correct_answer }}" class="relative" value="Cats">
-							<label for="{{ .correct_answer }}">{{ .correct_answer }}</label>
-						</div>
-					{{ else }}
-						<div class="ampstart-input ampstart-input-radio inline-block relative m0 p0 mb3 ">
-							<input type="radio" id="{{ .correct_answer }}" class="relative" name="favourite animal" value="{{ .correct_answer }}">
-							<label for="{{ .correct_answer }}">{{ .correct_answer }}</label>
-						</div>
-					{{ end }}
-			<div class="abe-sample-card-actions right">
-				<!--<input type="submit" value="DONE" class="ampstart-btn caps right"> -->
-				<a class="ampstart-btn caps text-decoration-none inline-block right " href="#">DONE</a> 
-			</div>
-			
-			
-			</div>
-		</div>
 		{{ end }}
 		
-		
-		  
-		  <ul>
-  
- 
-</ul>
-		
+		<div class="abe-examples flex flex-wrap">
+			<div class="ampstart-card abe-sample-card flex flex-column flex-auto p1 mb1 mw100">
+				<div class="quizContainer container-fluid well well-lg" style="margin-top:20px">
+					<div class="question"></div>
+					<ul class="choiceList"></ul>
+					<div class="quizMessage"></div>
+					<div class="result" style="color:green; font-weight:bold"></div>
+					<!--<button class="preButton">Previous Question</button>
+					<button class="nextButton">Next Question</button>
+					-->
+					<button class=" ampstart-btn caps text-decoration-none inline-block right submitNow">Submit Now</button>
+					<span class="pull-right curstatus"> </span>
+				</div>
+			</div>		
+		</div>
 	</section>
 </article>
 
@@ -82,21 +39,16 @@
 		
 		<div class="abe-examples flex flex-wrap">
 			<div class="ampstart-car  flex flex-column flex-auto p1 mb1 mw100">
+			
+			<div id="results"></div>
+		
+		
 				
                     <div class="abe-sample-card-actions">
 						
-							
-						
-						{{ if .PrevInSection }}
-							<a href="{{.PrevInSection.Permalink}}">Previous Post</a>
-						{{ end }}
-						{{ if .NextInSection }}
-							<a href="{{.NextInSection.Permalink}}">Next Post</a>
-						{{ end }}
+							<button id="previous" class="ampstart-btn caps text-decoration-none inline-block preButton">Previous Question</button>
+		<button id="next" class="ampstart-btn caps text-decoration-none inline-block right nextButton">Next Question</button>
 					
-					
-						  <a class="ampstart-btn caps text-decoration-none inline-block " href="//localhost:1313/post/my-new-post/">PRE</a>
-                        <a class="ampstart-btn caps text-decoration-none inline-block right" href="//localhost:1313/post/my-new-post/">NEXT</a>
 					</div>
             </div>
 		</div>
