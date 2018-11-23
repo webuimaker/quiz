@@ -28,7 +28,11 @@
     <link href="https://fonts.googleapis.com/css?family=Inconsolata|Montserrat" rel="stylesheet">
     <style amp-custom>{{ partial "css.css" . | safeCSS }}</style>
 	<style amp-custom>{{ partial "cust-css.css" . | safeCSS }}</style>
-	
+	<!-- Make sure to include Nelify's authentiation library -->
+  <!-- Also available via npm as netlify-auth-providers -->
+  <script src="https://unpkg.com/netlify-auth-providers"></script>
+
+
 		
 </head>
 
@@ -57,7 +61,7 @@
                 </div>
                 </li>
               {{else}}
-                <li class="ampstart-nav-item{{if $currentPage.IsMenuCurrent "main" . }} www-current-page{{end}}"><a href="{{.URL}}" class="text-decoration-none block">{{ .Name }}</a></li>
+                <li class="ampstart-nav-item{{if $currentPage.IsMenuCurrent "main" . }} www-current-page{{end}}"><a  class="text-decoration-none block" id="login" >{{ .Name }} ddas</a></li>
               {{end}}
 			  <li><span amp-access="NOT loggedIn" role="button" tabindex="0" amp-access-hide>
 				  <h5>Please login to comment</h5>
@@ -103,3 +107,6 @@
     </amp-sidebar>
     <!-- End Sidebar -->
     <!-- End Navbar -->
+<h1>GitHub Auth Demo:</h1>
+  <p><a href="#" id="login">Authenticate</a></p>
+  <p id="output"></p>

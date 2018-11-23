@@ -88,6 +88,23 @@
 	});
 </script>
 
+  <script>
+    $(function() {
+	 
+      $("#login").on("click", function(e) {
+        e.preventDefault();
+		alert("click login");
+        var authenticator = new netlify.default ({});
+        authenticator.authenticate({provider:"github", scope: "user"}, function(err, data) {
+          if (err) {
+            return $("#output").text("Error Authenticating with GitHub: " + err);
+          }
+          $("#output").text("Authenticated with GitHub. Access Token: " + data.token);
+        });
+      });
+    });
+  </script>
+
 <script>	
 	const myQuestions = function () {
 		var tmp = null;
@@ -104,15 +121,17 @@
 		});
 		return tmp;
 	}();
-	console.log( "jai shri ram" );
-	console.log(  myQuestions );
-	console.log( "jai hanuman" );
+	//console.log( "jai shri ram" );
+	//console.log(  myQuestions );
+	//console.log( "jai hanuman" );
 	
 	var questions = myQuestions.results;
 	var isFirstCall = true;
 	var ques_history = {};
 	var staus;
 	var selected_index;
+	var corre;
+	var selectCur;
 	//console.log(  questionsOpt );
 	
 	/*
@@ -159,12 +178,12 @@ var questions = [{
 }];
 */
 
-	console.log(  "Help me hir am" );
-	console.log(questions.length);
-	console.log(  questions );
+	//console.log(  "Help me hir am" );
+	//console.log(questions.length);
+	//console.log(  questions );
 	
 	var queLength =  questions.length;
-	console.log(queLength);
+	//console.log(queLength);
 	var currentQuestion = 0;
 	var viewingAns = 0;
 	var correctAnswers = 0;
@@ -197,11 +216,12 @@ $(document).ready(function ()
 				} 					
 		} else {
 			if(viewingAns == 3) { return false; }
-			currentQuestion = 0; viewingAns = 3;
+			currentQuestion = 0; 
+			viewingAns = 3;
 			viewResults();		
 		}
     });
-	// Submit now Vivekl
+	// Submit now Vi
 	//$(this).find(".submitNow").on("click", function () {
 	
 	$(".submitNow").click(function(event) {
@@ -213,8 +233,6 @@ $(document).ready(function ()
 			var val = $("input[type='radio']:checked").parent().text();
 				val = (val.trim()).toLowerCase();
 				var corAns = ((questions[currentQuestion].correct_answer).trim()).toLowerCase()
-			// alert(val);
-			
 			
             if (!val) { // User did not answer question.
 				//return(); // Make user answer again.
@@ -222,12 +240,8 @@ $(document).ready(function ()
 				$(".curstatus").removeClass("success");
 				$(".curstatus").addClass("error");
 				//$(".submitNow").attr('disabled', 'disabled');
-				
-				val == ((questions[currentQuestion].correct_answer).trim()).toLowerCase()
 			  }
 			else{			
-				//$('.submitNow').prop("disabled", false);
-				//alert(val);
 				var status=""
 				if(val == corAns){
 					$(".curstatus").removeClass("error");
@@ -241,13 +255,17 @@ $(document).ready(function ()
 					$(".curstatus").text("incorrect");
 					status = "incorrect";	
 				}
-					
+				$(".quizContainer .submitNow").attr("disabled",true);
+				ques_history[currentQuestion] = {"is_submit":"true","corre":corAns,"selectCur":val,"status":status,"selected_index":$("input[type='radio']:checked").val()};
+				$(".radio-inline").attr('disabled', true);	
 				
 			}
+			console.log(corAns);
+			console.log(val);
+			
 		} 
 		
-		ques_history[currentQuestion] = {"is_submit":"true","selected_index":$("input[type='radio']:checked").val(),"staus":status};
-		$(".radio-inline").attr('disabled', true);
+		
 	
 	});
 
@@ -265,6 +283,8 @@ $(document).ready(function ()
 			$(".curstatus").text("");
             var val = $("input[type='radio']:checked").parent().text();
 			val = (val.trim()).toLowerCase();
+			
+			
             if (val == undefined) 
 			{
                 $(document).find(".quizMessage").text("Please select an answer");
@@ -274,12 +294,13 @@ $(document).ready(function ()
 			{
                 // TODO: Remove any message -> not sure if this is efficient to call this each time....
                 $(document).find(".quizMessage").hide();
-				console.log(val , questions[currentQuestion].correct_answer);
+				//console.log(val , questions[currentQuestion].correct_answer);
 				if (val == ((questions[currentQuestion].correct_answer).trim()).toLowerCase()) 
 				{
 					correctAnswers++;
 				}
 				iSelectedAnswer[currentQuestion] = val;
+				
 				
 				currentQuestion++; // Since we have already displayed the first question on DOM ready
 				if(currentQuestion >= 1) {
@@ -423,25 +444,33 @@ function displayCurrentQuestion()
 	if(ques_history[currentQuestion]){
 		if(ques_history[currentQuestion].is_submit)
 		{
+			$($(".choiceList").find('li')[ques_history[currentQuestion].selected_index]).find('.radio-inline').attr("checked",true);
 			$(".radio-inline").attr('disabled', true);
-			$(".submitNow").attr('disabled', true);
-			
+			//$(".submitNow").attr('disabled', true);
+			//choice[]
 			// set checked radio button   ques_history[currentQuestion].sellected_index
 			// set status
-			console.log(staus);
-			if( staus == 'correct'){
+			console.log("rav" +choice);
+			console.log("raM " +ques_history[currentQuestion].corre);
+			console.log("Srin " +ques_history[currentQuestion].selectCur);
+			console.log("Srin " +ques_history[currentQuestion].status);
+			
+			
+			$(".quizContainer .submitNow").attr("disabled",true);
+			if( ques_history[currentQuestion].status == 'correct'){
 				$(".curstatus").removeClass("error");
 				$(".curstatus").addClass("success");
 				$(".curstatus").text("correct");
-			}
-			if(staus == 'incorrect'){
+			}else{
 				$(".curstatus").removeClass("success");
 					$(".curstatus").addClass("error");
 					$(".curstatus").text("incorrect");
 			}
 			
 		}
-	}
+	}else{
+			$(".quizContainer .submitNow").attr("disabled",false);
+		}
 }
 
 function resetQuiz()

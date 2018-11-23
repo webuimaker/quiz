@@ -22,3 +22,4 @@ canonifyurls = true
     name = "Registration/Login"
     url = "/login/"
     weight = 1
+    ids = "login"
