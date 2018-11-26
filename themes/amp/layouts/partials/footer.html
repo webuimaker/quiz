@@ -88,22 +88,7 @@
 	});
 </script>
 
-  <script>
-    $(function() {
-	 
-      $("#login").on("click", function(e) {
-        e.preventDefault();
-		alert("click login");
-        var authenticator = new netlify.default ({});
-        authenticator.authenticate({provider:"github", scope: "user"}, function(err, data) {
-          if (err) {
-            return $("#output").text("Error Authenticating with GitHub: " + err);
-          }
-          $("#output").text("Authenticated with GitHub. Access Token: " + data.token);
-        });
-      });
-    });
-  </script>
+
 
 <script>	
 	const myQuestions = function () {
@@ -539,6 +524,11 @@ function viewResults()
 
 	</script>
 <script type="text/javascript" src="/js/index.js"></script>
+
+
+
+<!-- Contacts Store JavaScript -->
+  <script src="/js/script.js"></script>
 </body>
 
 </html>

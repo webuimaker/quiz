@@ -17,6 +17,30 @@
 	<script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
     <!-- <script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script> -->
     <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
+	<!-- Firebase App is always required and must be first -->
+
+	<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-app.js"></script>
+<!-- Add additional services that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-functions.js"></script>
+<script>
+	$(document).ready(function(){
+  //initialize the firebase app
+  var config = {
+    apiKey: "AIzaSyCKNcULQZxFMYioXei32XNWQVoeutz4XDA",
+    authDomain: "contact-book-new.firebaseapp.com",
+    databaseURL: "https://contact-book-new.firebaseio.com",
+    projectId: "contact-book-new",
+    storageBucket: "contact-book-new.appspot.com",
+    messagingSenderId: "473268388365"
+  };
+  firebase.initializeApp(config);
+  });
+</script>
 	<!--
 	<script src="https://unpkg.com/jquery"></script>
         <script src="https://surveyjs.azureedge.net/1.0.55/survey.jquery.js"></script>
@@ -28,11 +52,7 @@
     <link href="https://fonts.googleapis.com/css?family=Inconsolata|Montserrat" rel="stylesheet">
     <style amp-custom>{{ partial "css.css" . | safeCSS }}</style>
 	<style amp-custom>{{ partial "cust-css.css" . | safeCSS }}</style>
-	<!-- Make sure to include Nelify's authentiation library -->
-  <!-- Also available via npm as netlify-auth-providers -->
-  <script src="https://unpkg.com/netlify-auth-providers"></script>
-
-
+	
 		
 </head>
 
@@ -61,7 +81,7 @@
                 </div>
                 </li>
               {{else}}
-                <li class="ampstart-nav-item{{if $currentPage.IsMenuCurrent "main" . }} www-current-page{{end}}"><a  class="text-decoration-none block" id="login" >{{ .Name }} ddas</a></li>
+                <li class="ampstart-nav-item{{if $currentPage.IsMenuCurrent "main" . }} www-current-page{{end}}"><a href="{{.URL}}" class="text-decoration-none block">{{ .Name }}</a></li>
               {{end}}
 			  <li><span amp-access="NOT loggedIn" role="button" tabindex="0" amp-access-hide>
 				  <h5>Please login to comment</h5>
@@ -107,6 +127,3 @@
     </amp-sidebar>
     <!-- End Sidebar -->
     <!-- End Navbar -->
-<h1>GitHub Auth Demo:</h1>
-  <p><a href="#" id="login">Authenticate</a></p>
-  <p id="output"></p>
